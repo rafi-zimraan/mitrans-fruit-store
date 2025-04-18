@@ -6,7 +6,7 @@ import {RootStackParamList} from './config';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-export default function Navigator({}) {
+export default function RootStack() {
   return (
     <Stack.Navigator
       screenOptions={{

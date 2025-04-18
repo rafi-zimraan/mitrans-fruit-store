@@ -1,7 +1,15 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ChartCounter, Gap} from '../../components';
+import {useFormatIDR} from '../../hooks';
 import {FruitDetailProps} from '../../routes/config';
 
 export default function FruitDetail({navigation, route}: FruitDetailProps) {
@@ -9,7 +17,7 @@ export default function FruitDetail({navigation, route}: FruitDetailProps) {
   console.log('ini detail fruit', fruit);
   return (
     <View style={{flex: 1}}>
-      <Image source={fruit.image} style={styles.img} />
+      <Image source={fruit.image} style={styles.img} resizeMethod="resize" />
       <View style={styles.navbar}>
         <TouchableOpacity
           style={styles.btnBack}
@@ -31,12 +39,57 @@ export default function FruitDetail({navigation, route}: FruitDetailProps) {
           </View>
           <Text style={styles.textStock}>Stok: 20</Text>
         </View>
+        <Text style={styles.textDescription}>{fruit.description}</Text>
+
+        <Gap flex={1} />
+        <View style={styles.containerChartBtn}>
+          <Text style={styles.textPrice}>
+            {useFormatIDR(fruit.price_per_unit, true)}
+          </Text>
+          <Gap width={20} />
+          <TouchableNativeFeedback useForeground>
+            <View style={{...styles.btnBuyChart, backgroundColor: fruit.color}}>
+              <Icon name="cart-plus" color={'white'} size={20} />
+              <Text style={styles.textBtnBuy}>Add to Chart</Text>
+            </View>
+          </TouchableNativeFeedback>
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  containerChartBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: 20,
+  },
+  textBtnBuy: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  btnBuyChart: {
+    height: 50,
+    borderRadius: 50 / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    elevation: 15,
+    flex: 1,
+  },
+  textPrice: {
+    color: 'black',
+    fontSize: 25,
+    fontWeight: '600',
+  },
+  textDescription: {
+    color: 'black',
+    fontSize: 15,
+    fontWeight: '400',
+    margin: 20,
+  },
   btnRanting: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -54,6 +107,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
     elevation: 10,
+    borderColor: 'black',
+    borderWidth: 0.4,
   },
   textFruitName: {
     color: 'black',
@@ -71,7 +126,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     margin: 20,
-    marginTop: 10,
   },
   btnBack: {
     width: 50,

@@ -1,11 +1,15 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {Navigator} from './routes';
+import {Provider} from 'react-redux';
+import {store} from './redux/store';
+import RootStack from './routes/Navigator';
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Navigator />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <RootStack />
+      </NavigationContainer>
+    </Provider>
   );
 }

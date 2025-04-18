@@ -13,10 +13,12 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ICON_LOGO} from '../../assets';
 import {ChartCounter, Gap} from '../../components';
 import {FruitData} from '../../constant';
-import {useFormatIDR} from '../../hooks';
+import {useAppDispatch, useFormatIDR} from '../../hooks';
+import {addToCart} from '../../redux/slices/cartSlice';
 import {HomeProps} from '../../routes/config';
 
 export default function Home({navigation, route}: HomeProps) {
+  const dispacth = useAppDispatch();
   const [selectedFilter, setSelectedFilter] = useState<number>(0);
   const filters: Array<string> = [
     'All',
@@ -33,6 +35,8 @@ export default function Home({navigation, route}: HomeProps) {
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
+      <Gap height={10} />
+
       <View style={styles.headerContainer}>
         <View style={styles.contentNavbar}>
           <Image source={ICON_LOGO} style={styles.Img} resizeMethod="resize" />
@@ -95,7 +99,9 @@ export default function Home({navigation, route}: HomeProps) {
                   ...styles.btnContainerFruit,
                   backgroundColor: item.color,
                 }}>
-                <TouchableOpacity style={styles.btnAddChart}>
+                <TouchableOpacity
+                  style={styles.btnAddChart}
+                  onPress={() => dispacth(addToCart(item))}>
                   <Icon name="cart-plus" color={'white'} size={30} />
                 </TouchableOpacity>
                 <Gap flex={1} />

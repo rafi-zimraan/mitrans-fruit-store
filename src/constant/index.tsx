@@ -30,7 +30,6 @@ export const FruitData: FruitDataType = [
         image: require('../assets/images/apples/Honeycrisp.webp'),
         amount: 0,
       },
-
       {
         name: 'Red Delicious',
         description:
